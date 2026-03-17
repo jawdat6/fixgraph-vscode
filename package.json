@@ -1,0 +1,89 @@
+{
+  "name": "fixgraph",
+  "publisher": "fixgraph",
+  "displayName": "FixGraph — Engineering Fix Search",
+  "description": "Search community-verified engineering fixes without leaving your editor",
+  "version": "0.0.1",
+  "engines": { "vscode": "^1.85.0" },
+  "categories": ["Other", "Debuggers"],
+  "keywords": ["debugging", "fixes", "errors", "search", "engineering", "mcp", "ai"],
+  "activationEvents": ["onStartupFinished"],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "fixgraph.search",
+        "title": "Search FixGraph",
+        "category": "FixGraph"
+      },
+      {
+        "command": "fixgraph.searchSelection",
+        "title": "Search FixGraph with Selection",
+        "category": "FixGraph"
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "fixgraph.search",
+        "key": "ctrl+shift+g",
+        "mac": "cmd+shift+g",
+        "when": "editorTextFocus"
+      }
+    ],
+    "configuration": {
+      "title": "FixGraph",
+      "properties": {
+        "fixgraph.apiKey": {
+          "type": "string",
+          "default": "",
+          "description": "Optional API key for write access (get free at fixgraph.netlify.app)"
+        },
+        "fixgraph.autoSearch": {
+          "type": "boolean",
+          "default": false,
+          "description": "Automatically search FixGraph when cursor is on an error diagnostic"
+        },
+        "fixgraph.resultLimit": {
+          "type": "number",
+          "default": 5,
+          "minimum": 1,
+          "maximum": 20,
+          "description": "Number of search results to display"
+        },
+        "fixgraph.panelPosition": {
+          "type": "string",
+          "default": "beside",
+          "enum": ["beside", "active"],
+          "description": "Where to open the FixGraph results panel"
+        }
+      }
+    },
+    "menus": {
+      "editor/context": [
+        {
+          "command": "fixgraph.searchSelection",
+          "when": "editorHasSelection",
+          "group": "navigation@99"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "package": "vsce package",
+    "publish": "vsce publish"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@types/vscode": "^1.85.0",
+    "typescript": "^5.3.0",
+    "@vscode/vsce": "^2.22.0"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jawdat6/fixgraph-vscode"
+  },
+  "homepage": "https://fixgraph.netlify.app"
+}
